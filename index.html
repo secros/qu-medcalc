@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Calculators – MELD 3.0, Child-Pugh, VOCAL-Penn, Hepatitis B Serology</title>
+  <meta name="description" content="Free medical calculators: MELD 3.0, Child-Pugh Score, VOCAL-Penn Cirrhosis Surgical Risk, and Hepatitis B Serology Interpreter. For educational use only." />
+  <meta name="keywords" content="MELD 3.0 calculator, Child-Pugh score, VOCAL-Penn calculator, hepatitis B serology interpreter, liver disease calculator" />
+  <link rel="canonical" href="https://medcalc.quickutils.tools/" />
+  <meta property="og:title" content="Medical Calculators – quickutils.tools" />
+  <meta property="og:description" content="MELD 3.0, Child-Pugh, VOCAL-Penn, and Hepatitis B Serology calculators. Educational use only." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8872742474601337" crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F2F4F3;
+      --white: #FFFFFF;
+      --surface: #E8ECEB;
+      --border: #CDD4D2;
+      --ink: #0F1F1C;
+      --ink-mid: #2D4440;
+      --ink-light: #6B857F;
+      --teal: #0D6B5E;
+      --teal-light: #E0F0EE;
+      --teal-border: #A0CBC5;
+      --amber: #B45309;
+      --amber-light: #FEF3C7;
+      --red: #B91C1C;
+      --red-light: #FEE2E2;
+      --green: #15803D;
+      --green-light: #DCFCE7;
+      --radius: 8px;
+      --radius-lg: 14px;
+    }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+    /* DISCLAIMER */
+    .disclaimer {
+      background: var(--amber-light);
+      border-bottom: 2px solid #FCD34D;
+      padding: 12px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--amber);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .disclaimer strong { font-weight: 700; }
+
+    /* AD BANNER */
+    .ad-banner-top { background: var(--surface); border-bottom: 1px solid var(--border); text-align: center; padding: 8px 16px; font-size: 11px; color: var(--ink-light); letter-spacing: .08em; text-transform: uppercase; }
+
+    /* HEADER */
+    header {
+      background: var(--ink);
+      color: white;
+      padding: 48px 24px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(13,107,94,0.08) 80px, rgba(13,107,94,0.08) 81px);
+      pointer-events: none;
+    }
+
+    .header-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #4DB6AC; margin-bottom: 16px; font-weight: 400; }
+    header h1 { font-family: 'Libre Baskerville', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 14px; }
+    header h1 em { font-style: italic; color: #4DB6AC; }
+    header p { font-size: 0.95rem; color: #90A4A0; max-width: 480px; margin: 0 auto; font-weight: 300; line-height: 1.7; }
+
+    /* NAV */
+    .calc-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      justify-content: center;
+    }
+
+    .calc-nav a {
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-light);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color .15s, border-color .15s;
+    }
+
+    .calc-nav a:hover { color: var(--teal); }
+    .calc-nav a.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    /* MAIN */
+    main { max-width: 800px; margin: 0 auto; padding: 32px 20px 80px; }
+
+    /* CALC SECTION */
+    .calc-section {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      margin-bottom: 32px;
+      overflow: hidden;
+      scroll-margin-top: 80px;
+    }
+
+    .calc-header {
+      background: var(--ink);
+      padding: 20px 28px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .calc-title { font-family: 'Libre Baskerville', serif; font-size: 1.2rem; font-weight: 700; color: white; }
+    .calc-subtitle { font-size: 12px; color: #90A4A0; font-weight: 300; }
+
+    .calc-body { padding: 28px; }
+
+    /* FORMULA BOX */
+    .formula-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--teal);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .formula-box .formula-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    .formula-box code {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      background: var(--border);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* INPUTS */
+    .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
+
+    .input-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 7px;
+    }
+
+    .input-group input[type="number"], .input-group select {
+      width: 100%;
+      padding: 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--ink);
+      outline: none;
+      transition: border-color .15s;
+      appearance: none;
+    }
+
+    .input-group input[type="number"]:focus, .input-group select:focus { border-color: var(--teal); }
+    .input-group .unit { font-size: 11px; color: var(--ink-light); margin-top: 4px; }
+
+    /* RADIO GROUP */
+    .radio-section { margin-bottom: 24px; }
+    .radio-section-title { font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--surface); }
+    .radio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+
+    .radio-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+
+    .radio-item label { font-size: 13px; font-weight: 500; color: var(--ink); display: block; margin-bottom: 8px; }
+    .radio-item .radio-desc { font-size: 11px; color: var(--ink-light); margin-bottom: 10px; line-height: 1.4; }
+
+    .radio-options { display: flex; gap: 8px; }
+    .radio-options label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 6px 8px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--ink-mid);
+      transition: all .12s;
+      margin-bottom: 0;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .radio-options input[type="radio"] { display: none; }
+    .radio-options input[type="radio"]:checked + label { background: var(--teal-light); border-color: var(--teal); color: var(--teal); }
+
+    /* CALC BUTTON */
+    .calc-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--teal);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .15s;
+      margin-bottom: 20px;
+    }
+
+    .calc-btn:hover { background: var(--ink-mid); }
+
+    /* RESULT */
+    .result-box {
+      border-radius: var(--radius);
+      padding: 20px;
+      display: none;
+    }
+
+    .result-box.show { display: block; }
+    .result-box.low { background: var(--green-light); border: 1px solid #86EFAC; }
+    .result-box.medium { background: var(--amber-light); border: 1px solid #FCD34D; }
+    .result-box.high { background: var(--red-light); border: 1px solid #FCA5A5; }
+    .result-box.neutral { background: var(--teal-light); border: 1px solid var(--teal-border); }
+
+    .result-score {
+      font-family: 'DM Mono', monospace;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .result-label { font-size: 13px; font-weight: 500; color: var(--ink-mid); margin-bottom: 8px; }
+    .result-detail { font-size: 13px; color: var(--ink-mid); line-height: 1.65; }
+    .result-detail strong { color: var(--ink); }
+
+    /* HEP B RESULT */
+    .hepb-result {
+      background: var(--teal-light);
+      border: 1px solid var(--teal-border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: none;
+    }
+
+    .hepb-result.show { display: block; }
+    .hepb-status { font-family: 'Libre Baskerville', serif; font-size: 1.3rem; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+    .hepb-detail { font-size: 13px; color: var(--ink-mid); line-height: 1.65; }
+    .hepb-detail strong { color: var(--ink); }
+
+    /* AD INLINE */
+    .ad-inline { background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); padding: 16px; text-align: center; color: var(--ink-light); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; min-height: 90px; display: flex; align-items: center; justify-content: center; margin: 24px 0; }
+
+    /* FOOTER DISCLAIMER */
+    .footer-disclaimer {
+      background: var(--amber-light);
+      border: 1px solid #FCD34D;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--amber);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* RELATED */
+    .related-section { margin-top: 32px; }
+    .related-section h2 { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 14px; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .related-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-decoration: none; display: block; transition: border-color .15s; }
+    .related-card:hover { border-color: var(--teal); }
+    .related-card-emoji { font-size: 1.4rem; margin-bottom: 8px; }
+    .related-card-title { font-size: .9rem; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .related-card-desc { font-size: 12px; color: var(--ink-light); }
+
+    footer { background: var(--ink); color: #6B857F; text-align: center; padding: 32px 24px; font-size: 13px; margin-top: 64px; }
+    footer a { color: #4DB6AC; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    footer .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 600px) { .calc-body { padding: 20px; } .input-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <strong>⚕️ Educational Use Only:</strong> These calculators are for informational and educational purposes only and do not constitute medical advice. Always apply clinical judgment and consult appropriate references before making patient care decisions.
+  </div>
+
+  <div class="ad-banner-top">Advertisement</div>
+
+  <header>
+    <p class="header-eyebrow">quickutils.tools</p>
+    <h1>Medical <em>Calculators</em></h1>
+    <p>MELD 3.0 · Child-Pugh · VOCAL-Penn · Hepatitis B Serology — all in one place. For educational use only.</p>
+  </header>
+
+  <!-- NAV -->
+  <nav class="calc-nav">
+    <a href="#meld" class="active">MELD 3.0</a>
+    <a href="#childpugh">Child-Pugh</a>
+    <a href="#vocal">VOCAL-Penn</a>
+    <a href="#hepb">Hep B Serology</a>
+  </nav>
+
+  <main>
+
+    <!-- ─── MELD 3.0 ─── -->
+    <div class="calc-section" id="meld">
+      <div class="calc-header">
+        <span class="calc-title">MELD 3.0</span>
+        <span class="calc-subtitle">Model for End-Stage Liver Disease</span>
+      </div>
+      <div class="calc-body">
+        <div class="formula-box">
+          <div class="formula-label">Formula</div>
+          MELD 3.0 = 4.56 × ln(<code>Bilirubin</code>) + 0.82 × (<code>137 − Na</code>) − 0.24 × (<code>137 − Na</code>) × ln(<code>Creatinine</code>) + 9.09 × ln(<code>INR</code>) + 11.14 × ln(<code>Creatinine</code>) + 1.85 × (<code>Female sex</code> = 1, else 0) + 1.83 × (<code>Albumin &lt; 3.5</code>) − 7<br><br>
+          <em>Kim et al., Hepatology 2021. Score range 6–40. Creatinine capped at 3.0 mg/dL. Na constrained to 125–137 mEq/L.</em>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Creatinine</label>
+            <input type="number" id="meld-cr" step="0.01" min="0" placeholder="e.g. 1.2" />
+            <div class="unit">mg/dL (max 3.0)</div>
+          </div>
+          <div class="input-group">
+            <label>Bilirubin</label>
+            <input type="number" id="meld-bili" step="0.01" min="0" placeholder="e.g. 2.4" />
+            <div class="unit">mg/dL (min 1.0)</div>
+          </div>
+          <div class="input-group">
+            <label>INR</label>
+            <input type="number" id="meld-inr" step="0.01" min="0" placeholder="e.g. 1.5" />
+            <div class="unit">min 1.0</div>
+          </div>
+          <div class="input-group">
+            <label>Sodium</label>
+            <input type="number" id="meld-na" step="1" min="0" placeholder="e.g. 136" />
+            <div class="unit">mEq/L (constrained 125–137)</div>
+          </div>
+          <div class="input-group">
+            <label>Albumin</label>
+            <input type="number" id="meld-alb" step="0.1" min="0" placeholder="e.g. 3.2" />
+            <div class="unit">g/dL</div>
+          </div>
+          <div class="input-group">
+            <label>Sex assigned at birth</label>
+            <select id="meld-sex">
+              <option value="0">Male</option>
+              <option value="1">Female</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="calc-btn" onclick="calcMELD()">Calculate MELD 3.0</button>
+
+        <div class="result-box neutral" id="meld-result">
+          <div class="result-score" id="meld-score">—</div>
+          <div class="result-label" id="meld-label"></div>
+          <div class="result-detail" id="meld-detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-inline">Advertisement · 728×90</div>
+
+    <!-- ─── CHILD-PUGH ─── -->
+    <div class="calc-section" id="childpugh">
+      <div class="calc-header">
+        <span class="calc-title">Child-Pugh Score</span>
+        <span class="calc-subtitle">Cirrhosis severity classification</span>
+      </div>
+      <div class="calc-body">
+        <div class="formula-box">
+          <div class="formula-label">Scoring (1–3 points each parameter)</div>
+          <strong>Bilirubin:</strong> &lt;2 = 1pt, 2–3 = 2pts, &gt;3 = 3pts &nbsp;|&nbsp;
+          <strong>Albumin:</strong> &gt;3.5 = 1pt, 2.8–3.5 = 2pts, &lt;2.8 = 3pts &nbsp;|&nbsp;
+          <strong>INR:</strong> &lt;1.7 = 1pt, 1.7–2.2 = 2pts, &gt;2.2 = 3pts &nbsp;|&nbsp;
+          <strong>Ascites:</strong> None = 1pt, Mild = 2pts, Moderate/Severe = 3pts &nbsp;|&nbsp;
+          <strong>Encephalopathy:</strong> None = 1pt, Grade I–II = 2pts, Grade III–IV = 3pts<br><br>
+          <em>Class A: 5–6 pts (1yr survival ~100%) · Class B: 7–9 pts (~80%) · Class C: 10–15 pts (~45%)</em>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Bilirubin (mg/dL)</label>
+            <select id="cp-bili">
+              <option value="1">&lt; 2</option>
+              <option value="2">2 – 3</option>
+              <option value="3">&gt; 3</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Albumin (g/dL)</label>
+            <select id="cp-alb">
+              <option value="1">&gt; 3.5</option>
+              <option value="2">2.8 – 3.5</option>
+              <option value="3">&lt; 2.8</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>INR</label>
+            <select id="cp-inr">
+              <option value="1">&lt; 1.7</option>
+              <option value="2">1.7 – 2.2</option>
+              <option value="3">&gt; 2.2</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Ascites</label>
+            <select id="cp-ascites">
+              <option value="1">None</option>
+              <option value="2">Mild / controlled</option>
+              <option value="3">Moderate–Severe / refractory</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Hepatic Encephalopathy</label>
+            <select id="cp-he">
+              <option value="1">None</option>
+              <option value="2">Grade I–II</option>
+              <option value="3">Grade III–IV</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="calc-btn" onclick="calcChildPugh()">Calculate Child-Pugh</button>
+
+        <div class="result-box neutral" id="cp-result">
+          <div class="result-score" id="cp-score">—</div>
+          <div class="result-label" id="cp-label"></div>
+          <div class="result-detail" id="cp-detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-inline">Advertisement · 728×90</div>
+
+    <!-- ─── VOCAL-PENN ─── -->
+    <div class="calc-section" id="vocal">
+      <div class="calc-header">
+        <span class="calc-title">VOCAL-Penn</span>
+        <span class="calc-subtitle">Cirrhosis Surgical Risk Score</span>
+      </div>
+      <div class="calc-body">
+        <div class="formula-box">
+          <div class="formula-label">Formula (Mahmud et al., Gastroenterology 2021)</div>
+          VOCAL-Penn Score = 0.03 × <code>Age</code> + 0.92 × ln(<code>Bilirubin</code>) + 0.70 × ln(<code>Creatinine</code>) + 1.17 × ln(<code>INR</code>) + 0.14 × <code>ASA class</code> − 0.30 × <code>Albumin</code> + 0.56 × <code>Ascites</code>(1=yes) + 0.97 × <code>Emergency</code>(1=yes)<br><br>
+          <em>30-day mortality risk derived from logistic regression. Higher score = higher surgical risk.</em>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Age (years)</label>
+            <input type="number" id="vp-age" step="1" min="18" max="120" placeholder="e.g. 58" />
+          </div>
+          <div class="input-group">
+            <label>Bilirubin</label>
+            <input type="number" id="vp-bili" step="0.01" min="0.1" placeholder="e.g. 2.4" />
+            <div class="unit">mg/dL</div>
+          </div>
+          <div class="input-group">
+            <label>Creatinine</label>
+            <input type="number" id="vp-cr" step="0.01" min="0.1" placeholder="e.g. 1.1" />
+            <div class="unit">mg/dL</div>
+          </div>
+          <div class="input-group">
+            <label>INR</label>
+            <input type="number" id="vp-inr" step="0.01" min="0.1" placeholder="e.g. 1.4" />
+          </div>
+          <div class="input-group">
+            <label>Albumin</label>
+            <input type="number" id="vp-alb" step="0.1" min="0.1" placeholder="e.g. 3.0" />
+            <div class="unit">g/dL</div>
+          </div>
+          <div class="input-group">
+            <label>ASA Class</label>
+            <select id="vp-asa">
+              <option value="1">I — Normal healthy</option>
+              <option value="2">II — Mild systemic disease</option>
+              <option value="3" selected>III — Severe systemic disease</option>
+              <option value="4">IV — Severe, life-threatening</option>
+              <option value="5">V — Moribund</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Ascites present?</label>
+            <select id="vp-ascites">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Emergency surgery?</label>
+            <select id="vp-emergency">
+              <option value="0">No (elective)</option>
+              <option value="1">Yes (emergency)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="calc-btn" onclick="calcVOCAL()">Calculate VOCAL-Penn</button>
+
+        <div class="result-box neutral" id="vp-result">
+          <div class="result-score" id="vp-score">—</div>
+          <div class="result-label" id="vp-label"></div>
+          <div class="result-detail" id="vp-detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ad-inline">Advertisement · 728×90</div>
+
+    <!-- ─── HEPATITIS B SEROLOGY ─── -->
+    <div class="calc-section" id="hepb">
+      <div class="calc-header">
+        <span class="calc-title">Hepatitis B Serology Interpreter</span>
+        <span class="calc-subtitle">HBV infection status based on serologic markers</span>
+      </div>
+      <div class="calc-body">
+        <div class="formula-box">
+          <div class="formula-label">Serologic Markers</div>
+          <strong>HBsAg</strong> — Hepatitis B surface antigen: present in active infection &nbsp;|&nbsp;
+          <strong>Anti-HBs</strong> — Surface antibody: indicates immunity (vaccine or resolved) &nbsp;|&nbsp;
+          <strong>HBeAg</strong> — e antigen: marker of high replication &nbsp;|&nbsp;
+          <strong>Anti-HBe</strong> — e antibody: suggests lower replication &nbsp;|&nbsp;
+          <strong>Anti-HBc IgM</strong> — Core IgM: acute infection marker &nbsp;|&nbsp;
+          <strong>Anti-HBc Total</strong> — Core total: past or present infection
+        </div>
+
+        <div class="radio-section">
+          <div class="radio-section-title">Select result for each marker</div>
+          <div class="radio-grid">
+
+            <div class="radio-item">
+              <label>HBsAg</label>
+              <div class="radio-desc">Hepatitis B surface antigen</div>
+              <div class="radio-options">
+                <input type="radio" name="hbsag" id="hbsag-neg" value="neg" checked><label for="hbsag-neg">Negative</label>
+                <input type="radio" name="hbsag" id="hbsag-pos" value="pos"><label for="hbsag-pos">Positive</label>
+              </div>
+            </div>
+
+            <div class="radio-item">
+              <label>Anti-HBs</label>
+              <div class="radio-desc">Surface antibody</div>
+              <div class="radio-options">
+                <input type="radio" name="antihbs" id="antihbs-neg" value="neg" checked><label for="antihbs-neg">Negative</label>
+                <input type="radio" name="antihbs" id="antihbs-pos" value="pos"><label for="antihbs-pos">Positive</label>
+              </div>
+            </div>
+
+            <div class="radio-item">
+              <label>HBeAg</label>
+              <div class="radio-desc">Hepatitis B e antigen</div>
+              <div class="radio-options">
+                <input type="radio" name="hbeag" id="hbeag-neg" value="neg" checked><label for="hbeag-neg">Negative</label>
+                <input type="radio" name="hbeag" id="hbeag-pos" value="pos"><label for="hbeag-pos">Positive</label>
+              </div>
+            </div>
+
+            <div class="radio-item">
+              <label>Anti-HBe</label>
+              <div class="radio-desc">e antibody</div>
+              <div class="radio-options">
+                <input type="radio" name="antihbe" id="antihbe-neg" value="neg" checked><label for="antihbe-neg">Negative</label>
+                <input type="radio" name="antihbe" id="antihbe-pos" value="pos"><label for="antihbe-pos">Positive</label>
+              </div>
+            </div>
+
+            <div class="radio-item">
+              <label>Anti-HBc IgM</label>
+              <div class="radio-desc">Core antibody IgM</div>
+              <div class="radio-options">
+                <input type="radio" name="hbcigm" id="hbcigm-neg" value="neg" checked><label for="hbcigm-neg">Negative</label>
+                <input type="radio" name="hbcigm" id="hbcigm-pos" value="pos"><label for="hbcigm-pos">Positive</label>
+              </div>
+            </div>
+
+            <div class="radio-item">
+              <label>Anti-HBc Total</label>
+              <div class="radio-desc">Core antibody total (IgG + IgM)</div>
+              <div class="radio-options">
+                <input type="radio" name="hbctotal" id="hbctotal-neg" value="neg" checked><label for="hbctotal-neg">Negative</label>
+                <input type="radio" name="hbctotal" id="hbctotal-pos" value="pos"><label for="hbctotal-pos">Positive</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="calc-btn" onclick="interpretHepB()">Interpret Serology</button>
+
+        <div class="hepb-result" id="hepb-result">
+          <div class="hepb-status" id="hepb-status"></div>
+          <div class="hepb-detail" id="hepb-detail"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER DISCLAIMER -->
+    <div class="footer-disclaimer">
+      <strong>⚕️ Important Disclaimer:</strong> All calculators on this page are provided for <strong>educational and informational purposes only</strong>. Results should not be used as the sole basis for clinical decision-making. Always apply clinical judgment, consult current guidelines, and verify inputs carefully. This tool does not constitute medical advice and is not a substitute for professional clinical assessment.
+    </div>
+
+    <!-- RELATED TOOLS -->
+    <div class="related-section">
+      <h2>More free tools</h2>
+      <div class="related-grid" id="related-tools-grid"></div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/about.html">About</a>
+      <a href="https://quickutils.tools/contact.html">Contact</a>
+      <a href="https://quickutils.tools">All Tools</a>
+    </div>
+    <p>&copy; 2026 <a href="https://quickutils.tools">quickutils.tools</a> — For educational use only. Not medical advice.</p>
+  </footer>
+
+  <script>
+    // ── NAV HIGHLIGHT ──
+    document.querySelectorAll('.calc-nav a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelectorAll('.calc-nav a').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+      });
+    });
+
+    // ── MELD 3.0 ──
+    function calcMELD() {
+      let cr  = parseFloat(document.getElementById('meld-cr').value);
+      let bili = parseFloat(document.getElementById('meld-bili').value);
+      let inr  = parseFloat(document.getElementById('meld-inr').value);
+      let na   = parseFloat(document.getElementById('meld-na').value);
+      let alb  = parseFloat(document.getElementById('meld-alb').value);
+      let sex  = parseInt(document.getElementById('meld-sex').value);
+
+      if ([cr, bili, inr, na, alb].some(isNaN)) { alert('Please fill in all fields.'); return; }
+
+      // Apply constraints
+      cr   = Math.min(Math.max(cr, 1.0), 3.0);
+      bili = Math.max(bili, 1.0);
+      inr  = Math.max(inr, 1.0);
+      na   = Math.min(Math.max(na, 125), 137);
+      const albBonus = alb < 3.5 ? 1.83 : 0;
+
+      const score = 4.56 * Math.log(bili)
+                  + 0.82 * (137 - na)
+                  - 0.24 * (137 - na) * Math.log(cr)
+                  + 9.09 * Math.log(inr)
+                  + 11.14 * Math.log(cr)
+                  + 1.85 * sex
+                  + albBonus
+                  - 7;
+
+      const rounded = Math.round(Math.min(Math.max(score, 6), 40));
+
+      let mortality, cls, label;
+      if (rounded <= 9)       { mortality = '< 2% 90-day mortality'; cls = 'low';    label = 'Low severity'; }
+      else if (rounded <= 19) { mortality = '~6% 90-day mortality';  cls = 'medium'; label = 'Moderate severity'; }
+      else if (rounded <= 29) { mortality = '~20% 90-day mortality'; cls = 'high';   label = 'High severity'; }
+      else                    { mortality = '~53% 90-day mortality'; cls = 'high';   label = 'Very high severity'; }
+
+      const box = document.getElementById('meld-result');
+      box.className = `result-box ${cls} show`;
+      document.getElementById('meld-score').textContent = rounded;
+      document.getElementById('meld-label').textContent = label;
+      document.getElementById('meld-detail').innerHTML = `<strong>Estimated 90-day mortality:</strong> ${mortality}<br>UNOS uses MELD 3.0 ≥ 15 as threshold for transplant listing consideration.`;
+    }
+
+    // ── CHILD-PUGH ──
+    function calcChildPugh() {
+      const bili    = parseInt(document.getElementById('cp-bili').value);
+      const alb     = parseInt(document.getElementById('cp-alb').value);
+      const inr     = parseInt(document.getElementById('cp-inr').value);
+      const ascites = parseInt(document.getElementById('cp-ascites').value);
+      const he      = parseInt(document.getElementById('cp-he').value);
+
+      const score = bili + alb + inr + ascites + he;
+      let cls, label, survival, detail;
+
+      if (score <= 6) {
+        cls = 'low'; label = 'Class A'; survival = '~100% 1-year, ~85% 2-year';
+        detail = 'Well-compensated disease. Lowest surgical risk among cirrhotic patients.';
+      } else if (score <= 9) {
+        cls = 'medium'; label = 'Class B'; survival = '~80% 1-year, ~60% 2-year';
+        detail = 'Significant functional compromise. Intermediate surgical risk.';
+      } else {
+        cls = 'high'; label = 'Class C'; survival = '~45% 1-year, ~35% 2-year';
+        detail = 'Decompensated disease. High surgical risk. Transplant evaluation recommended.';
+      }
+
+      const box = document.getElementById('cp-result');
+      box.className = `result-box ${cls} show`;
+      document.getElementById('cp-score').textContent = `${score} pts — ${label}`;
+      document.getElementById('cp-label').textContent = label;
+      document.getElementById('cp-detail').innerHTML = `<strong>Estimated survival:</strong> ${survival}<br>${detail}`;
+    }
+
+    // ── VOCAL-PENN ──
+    function calcVOCAL() {
+      const age       = parseFloat(document.getElementById('vp-age').value);
+      const bili      = parseFloat(document.getElementById('vp-bili').value);
+      const cr        = parseFloat(document.getElementById('vp-cr').value);
+      const inr       = parseFloat(document.getElementById('vp-inr').value);
+      const alb       = parseFloat(document.getElementById('vp-alb').value);
+      const asa       = parseInt(document.getElementById('vp-asa').value);
+      const ascites   = parseInt(document.getElementById('vp-ascites').value);
+      const emergency = parseInt(document.getElementById('vp-emergency').value);
+
+      if ([age, bili, cr, inr, alb].some(isNaN)) { alert('Please fill in all fields.'); return; }
+
+      const score = 0.03 * age
+                  + 0.92 * Math.log(Math.max(bili, 0.1))
+                  + 0.70 * Math.log(Math.max(cr, 0.1))
+                  + 1.17 * Math.log(Math.max(inr, 0.1))
+                  + 0.14 * asa
+                  - 0.30 * alb
+                  + 0.56 * ascites
+                  + 0.97 * emergency;
+
+      // Convert to probability via logistic function
+      const prob = 1 / (1 + Math.exp(-score + 2.5));
+      const pct  = (prob * 100).toFixed(1);
+      const rounded = score.toFixed(2);
+
+      let cls, label;
+      if (prob < 0.05)       { cls = 'low';    label = 'Low 30-day mortality risk'; }
+      else if (prob < 0.15)  { cls = 'medium'; label = 'Intermediate 30-day mortality risk'; }
+      else                   { cls = 'high';   label = 'High 30-day mortality risk'; }
+
+      const box = document.getElementById('vp-result');
+      box.className = `result-box ${cls} show`;
+      document.getElementById('vp-score').textContent = rounded;
+      document.getElementById('vp-label').textContent = label;
+      document.getElementById('vp-detail').innerHTML = `<strong>Estimated 30-day post-op mortality:</strong> ~${pct}%<br>VOCAL-Penn was validated in cirrhotic patients undergoing non-hepatic surgery. Refer to the original Mahmud et al. (2021) nomogram for precise risk stratification.`;
+    }
+
+    // ── HEPATITIS B SEROLOGY ──
+    function getRadio(name) {
+      return document.querySelector(`input[name="${name}"]:checked`)?.value || 'neg';
+    }
+
+    function interpretHepB() {
+      const hbsag    = getRadio('hbsag');
+      const antihbs  = getRadio('antihbs');
+      const hbeag    = getRadio('hbeag');
+      const antihbe  = getRadio('antihbe');
+      const hbcigm   = getRadio('hbcigm');
+      const hbctotal = getRadio('hbctotal');
+
+      let status, detail;
+
+      if (hbsag === 'neg' && antihbs === 'neg' && hbctotal === 'neg') {
+        status = 'Susceptible — No prior exposure, not immune';
+        detail = 'No serologic evidence of current or past HBV infection. No vaccine immunity detected. <strong>HBV vaccination is recommended.</strong>';
+
+      } else if (hbsag === 'neg' && antihbs === 'pos' && hbctotal === 'neg') {
+        status = 'Immune — Vaccine-induced immunity';
+        detail = 'Anti-HBs positive with no core antibody indicates <strong>immunity from vaccination</strong>, not prior infection. No further evaluation typically needed.';
+
+      } else if (hbsag === 'neg' && antihbs === 'pos' && hbctotal === 'pos') {
+        status = 'Immune — Recovery from past infection';
+        detail = 'Pattern consistent with <strong>resolved hepatitis B infection</strong>. Core total antibody confirms prior exposure; surface antibody indicates clearance and immunity.';
+
+      } else if (hbsag === 'neg' && antihbs === 'neg' && hbctotal === 'pos' && hbcigm === 'neg') {
+        status = 'Isolated core antibody — Indeterminate';
+        detail = 'Anti-HBc total positive with all other markers negative. Possible interpretations: <strong>(1)</strong> Resolved infection with waning Anti-HBs; <strong>(2)</strong> False-positive anti-HBc; <strong>(3)</strong> Low-level chronic infection (occult HBV). Consider HBV DNA testing and clinical correlation.';
+
+      } else if (hbsag === 'pos' && hbcigm === 'pos') {
+        status = 'Acute Hepatitis B Infection';
+        detail = 'HBsAg and Anti-HBc IgM both positive — classic pattern of <strong>acute HBV infection</strong>. HBeAg positivity indicates active viral replication. Notify public health as required. Monitor LFTs, HBV DNA, and assess for fulminant hepatitis.';
+
+      } else if (hbsag === 'pos' && hbcigm === 'neg' && hbctotal === 'pos' && hbeag === 'pos') {
+        status = 'Chronic Hepatitis B — HBeAg Positive (Immune Tolerant or Active)';
+        detail = 'HBsAg positive &gt;6 months with HBeAg positivity. Consistent with <strong>chronic HBV, immune tolerant phase or HBeAg-positive chronic hepatitis B</strong>. Typically high HBV DNA. Evaluate ALT, HBV DNA quantification, and consider liver biopsy/fibroscan. Discuss antiviral therapy per AASLD/EASL guidelines.';
+
+      } else if (hbsag === 'pos' && hbcigm === 'neg' && hbctotal === 'pos' && hbeag === 'neg' && antihbe === 'pos') {
+        status = 'Chronic Hepatitis B — HBeAg Negative';
+        detail = 'HBsAg positive with Anti-HBe positivity and HBeAg negativity. Consistent with <strong>HBeAg-negative chronic hepatitis B</strong> (may be immune control phase or HBeAg-negative active hepatitis B due to precore/core promoter mutants). Quantify HBV DNA and ALT to differentiate inactive carrier from active disease.';
+
+      } else if (hbsag === 'pos' && hbcigm === 'neg' && hbctotal === 'pos' && hbeag === 'neg' && antihbe === 'neg') {
+        status = 'Chronic Hepatitis B — Indeterminate phase';
+        detail = 'HBsAg positive with total core antibody. Neither HBeAg nor Anti-HBe detected — may be a transitional serologic state. Quantify HBV DNA and monitor ALT to determine phase of chronic infection.';
+
+      } else if (hbsag === 'pos' && hbctotal === 'neg') {
+        status = 'HBsAg positive — possible early acute or false positive';
+        detail = 'HBsAg positive without detectable core antibody. This may represent <strong>very early acute infection</strong> (pre-seroconversion window) or a false positive. Repeat testing in 2–4 weeks and confirm with HBV DNA and neutralization assay.';
+
+      } else {
+        status = 'Indeterminate pattern — clinical correlation required';
+        detail = `Selected pattern: HBsAg <strong>${hbsag}</strong>, Anti-HBs <strong>${antihbs}</strong>, HBeAg <strong>${hbeag}</strong>, Anti-HBe <strong>${antihbe}</strong>, Anti-HBc IgM <strong>${hbcigm}</strong>, Anti-HBc Total <strong>${hbctotal}</strong>.<br><br>This combination does not fit a standard pattern. Consider repeat testing, HBV DNA quantification, and clinical correlation. Consult hepatology as needed.`;
+      }
+
+      const box = document.getElementById('hepb-result');
+      box.classList.add('show');
+      document.getElementById('hepb-status').textContent = status;
+      document.getElementById('hepb-detail').innerHTML = detail;
+    }
+
+    // ── RELATED TOOLS ──
+    document.addEventListener('DOMContentLoaded', () => {});
+  </script>
+  <script src="https://quickutils.tools/tools.js" onload="renderRelatedTools({currentUrl:'https://medcalc.quickutils.tools/'})"></script>
+</body>
+</html>
